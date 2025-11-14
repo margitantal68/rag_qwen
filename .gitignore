@@ -1,0 +1,54 @@
+# .gitignore
+
+# -----------------
+# 1. Environment/Configuration
+# -----------------
+# Ignore the environment file containing secrets (API Key)
+.env
+
+# -----------------
+# 2. Python Specific
+# -----------------
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / Packaging
+.Python
+build/
+dist/
+wheels/
+*.egg-info/
+*.whl
+
+# Virtual environment (recommended)
+/venv/
+/env/
+/.venv/
+
+#Continue plugin
+/.continue/
+
+
+# IDE files (common examples)
+.vscode/
+.idea/
+*.swp
+*.bak
+*.swo
+
+# -----------------
+# 3. Data and Output
+# -----------------
+# Ignore the local file used to populate the RAG store 
+# (since the actual indexed data lives in the Google service)
+sample_document.txt
+
+# Database files (if you ever add a local DB)
+*.db
+*.sqlite
+*.sqlite3
+
+# rag_store
+rag_store/
