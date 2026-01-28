@@ -15,6 +15,9 @@ load_dotenv()
 API_KEY = os.environ.get("API_KEY")
 LLM_URL = os.environ.get("LLM_URL")
 
+EMBEDDER_MODEL = "BAAI/bge-m3"
+LLM_MODEL = "Qwen/Qwen3-32B"
+
 # ===========================================================
 # FILE READERS
 # ===========================================================
@@ -36,8 +39,7 @@ def read_pdf_file(path):
 # ===========================================================
 
 def load_embedding_model():
-    # BGE-M3 via SentenceTransformers
-    model = SentenceTransformer("BAAI/bge-m3")
+    model = SentenceTransformer(EMBEDDER_MODEL)
     return model
     
 
@@ -207,7 +209,7 @@ def search_chroma(query, model, collection, k=3):
 # 6. LLM CALL
 # ===========================================================
 
-def call_llm(prompt, api_key, model_name="Qwen/Qwen3-32B"):
+def call_llm(prompt, api_key, model_name=LLM_MODEL):
     url = LLM_URL
 
     payload = {
@@ -271,15 +273,9 @@ User question: {user_query}
 # Example Usage
 # ===========================================================
 
-# INPUT = "TEXT"
-INPUT = "PDF"
-
 if __name__ == "__main__":
     model, client, collection = create_file_search_store()
-    if INPUT == "TEXT":
-        upload_document_to_store("data/topics.txt", model, collection, chunk_size=500, overlap=100)
-        print
-    elif INPUT == "PDF":
-        upload_document_to_store("data/hu-embeddings-infocommunications-2025-11-03.pdf", model, collection, chunk_size=500, overlap=100)
+    upload_document_to_store("data/topics.txt", model, collection, chunk_size=500, overlap=100)
+    # upload_document_to_store("data/hu-embeddings-infocommunications-2025-11-03.pdf", model, collection, chunk_size=500, overlap=100)
     query_rag_system(model, collection, api_key=API_KEY)
 
